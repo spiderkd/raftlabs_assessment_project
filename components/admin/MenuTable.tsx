@@ -34,7 +34,7 @@ export default function MenuTable() {
   };
 
   return (
-    <section className="bg-[#141414] rounded-2xl border border-white/5 p-10 space-y-10">
+    <section className="bg-[#141414] rounded-2xl border border-white/5 p-5 md:p-10 space-y-10">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

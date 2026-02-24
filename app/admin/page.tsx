@@ -55,7 +55,7 @@ export default function AdminPage() {
         </div>
 
         {/* ================= TAB CONTENT ================= */}
-        <div className="bg-[#141414] border border-white/5 rounded-2xl p-10">
+        <div className="bg-[#141414] border border-white/5 rounded-2xl p-6 md:p-10">
           {activeTab === "menu" && (
             <>
               <h2 className="text-xl font-light tracking-wide mb-8">

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -21,7 +20,7 @@ export default function OrdersTable() {
   };
 
   return (
-    <section className="bg-[#141414] rounded-2xl border border-white/5 p-10 space-y-10">
+    <section className="bg-[#141414] rounded-2xl border border-white/5 p-5 md:p-10 space-y-10">
       {/* Header */}
       <div>
         <p className="text-xs tracking-[0.3em] uppercase text-[#c6a96b]">
