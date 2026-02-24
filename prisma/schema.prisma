@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Category {
+  STARTER
+  MAIN_COURSE
+  SEAFOOD
+  PASTA
+  SALAD
+  DESSERT
+  BEVERAGE
+}
+
+model MenuItem {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  price       Int
+  image       String
+  category    Category
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model Order {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  address   String
+  phone     String
+  status    String   @default("Order Received")
+  items     Json
+  createdAt DateTime @default(now())
+}
+
+type OrderItem {
+  id       String
+  name     String
+  price    Float
+  quantity Int
+}
+
+enum OrderStatus {
+  ORDER_RECEIVED
+  PREPARING
+  OUT_FOR_DELIVERY
+  DELIVERED
+}

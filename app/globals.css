@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.admin-input {
+  @apply w-full h-11 rounded-xl
+         border border-gray-200
+         bg-gray-50
+         px-4
+         text-sm text-gray-900
+         placeholder:text-gray-400
+         placeholder:text-xs
+         focus:bg-white
+         focus:border-gray-900
+         focus:outline-none
+         focus:ring-1
+         focus:ring-gray-900/10
+         transition;
+}
+
+.admin-textarea {
+  @apply w-full rounded-xl
+         border border-gray-200
+         bg-gray-50
+         px-4 py-3
+         text-sm text-gray-900
+         placeholder:text-gray-400
+         placeholder:text-xs
+         focus:bg-white
+         focus:border-gray-900
+         focus:outline-none
+         focus:ring-1
+         focus:ring-gray-900/10
+         resize-none
+         transition;
+}
+
+.lux-input {
+  @apply w-full rounded-2xl bg-black/40 border border-white/10 px-4 py-3
+         text-white placeholder-gray-500
+         focus:outline-none focus:border-[#c6a96b]
+         focus:ring-1 focus:ring-[#c6a96b]
+         transition;
+}
+
+.lux-textarea {
+  @apply w-full rounded-2xl bg-black/40 border border-white/10 px-4 py-3
+         text-white placeholder-gray-500
+         focus:outline-none focus:border-[#c6a96b]
+         focus:ring-1 focus:ring-[#c6a96b]
+         transition resize-none;
+}
