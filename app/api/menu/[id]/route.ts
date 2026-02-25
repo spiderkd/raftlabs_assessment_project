@@ -1,10 +1,10 @@
-
 import { prisma } from "@/lib/prisma";
 import { success, failure } from "@/lib/api-response";
 import { Category } from "@prisma/client";
+import { NextRequest } from "next/server";
 
 export async function PATCH(
-  req: Request,
+  req: NextRequest,
   context: { params: Promise<{ id: string }> },
 ) {
   try {
@@ -45,11 +45,13 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _: Request,
-  { params }: { params: { id: string } },
+  // _: Request,
+  // { params }: { params: { id: string } },
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> },
 ) {
   try {
-    const { id } = params;
+    const { id } = await context.params;
     if (!id) return failure("Menu item id is required");
 
     await prisma.menuItem.delete({
