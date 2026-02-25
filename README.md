@@ -4,6 +4,9 @@ A full-stack food ordering system built with **Next.js App Router**, **Prisma**,
 
 This application supports complete menu management, cart handling, and order processing with admin controls and automated test coverage.
 
+
+
+
 ---
 
 ## 📁 Project Structure
@@ -84,6 +87,11 @@ The objective of this assessment was to demonstrate:
 - State management using Context API
 - Admin & user workflow separation
 - Testing practices (API + UI)
+
+---
+## 🎥 Technical Demo – Full Application Walkthrough
+
+https://github.com/user-attachments/assets/4a624165-d73b-4f0f-aadf-666fcd52a67a
 
 ---
 
