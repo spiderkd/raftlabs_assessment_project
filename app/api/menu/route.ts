@@ -1,15 +1,50 @@
+
 import { prisma } from "@/lib/prisma";
+import { success, failure } from "@/lib/api-response";
+import { Category } from "@prisma/client";
 
 export async function GET() {
-  return Response.json(await prisma.menuItem.findMany());
+  try {
+    const items = await prisma.menuItem.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+
+    return success(items);
+  } catch {
+    return failure("Failed to fetch menu items", 500);
+  }
 }
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  try {
+    const body = await req.json();
+    const { name, description, price, image, category } = body;
 
-  const item = await prisma.menuItem.create({
-    data: body,
-  });
+    if (!name || !description || !price || !image || !category) {
+      return failure("All fields including category are required");
+    }
 
-  return Response.json(item);
+    const numericPrice = Number(price);
+    if (isNaN(numericPrice) || numericPrice <= 0) {
+      return failure("Invalid price");
+    }
+
+    if (!Object.values(Category).includes(category)) {
+      return failure("Invalid category value");
+    }
+
+    const item = await prisma.menuItem.create({
+      data: {
+        name,
+        description,
+        price: numericPrice,
+        image,
+        category,
+      },
+    });
+
+    return success(item, 201);
+  } catch {
+    return failure("Failed to create menu item", 500);
+  }
 }

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function CheckoutForm() {
   const router = useRouter();
@@ -14,8 +15,27 @@ export default function CheckoutForm() {
     phone: "",
   });
 
+  const validatePhone = (phone: string) => {
+    const phoneRegex = /^[0-9]{10}$/;
+    return phoneRegex.test(phone);
+  };
+
   const handleSubmit = async () => {
-    if (!form.name || !form.address || !form.phone) return;
+    if (!form.name || !form.address || !form.phone) {
+      toast.error("All fields are required.");
+      return;
+    }
+
+    if (!validatePhone(form.phone)) {
+      toast.error("Phone number must be exactly 10 digits.");
+      return;
+    }
+
+    if (cart.length === 0) {
+      toast.error("Your cart is empty.");
+      ``;
+      return;
+    }
 
     const res = await fetch("/api/orders", {
       method: "POST",
@@ -68,7 +88,12 @@ export default function CheckoutForm() {
                      py-3 text-white placeholder-gray-500
                      focus:outline-none focus:border-[#c6a96b]
                      transition"
-          onChange={(e) => setForm({ ...form, phone: e.target.value })}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              phone: e.target.value.replace(/\D/g, ""), // allow only digits
+            })
+          }
         />
       </div>
 

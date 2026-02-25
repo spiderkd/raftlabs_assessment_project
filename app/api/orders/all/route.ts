@@ -1,35 +1,20 @@
 import { prisma } from "@/lib/prisma";
-
-const getStatusFromTime = (createdAt: Date) => {
-  const diff = (Date.now() - new Date(createdAt).getTime()) / 1000;
-
-  if (diff < 6) return "Order Received";
-  if (diff < 12) return "Preparing";
-  if (diff < 18) return "Out for Delivery";
-  return "Delivered";
-};
+import { success, failure } from "@/lib/api-response";
+import { getStatusFromTime } from "@/lib/order-status";
 
 export async function GET() {
-  const orders = await prisma.order.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  try {
+    const orders = await prisma.order.findMany({
+      orderBy: { createdAt: "desc" },
+    });
 
-  const updatedOrders = await Promise.all(
-    orders.map(async (order) => {
-      const nextStatus = getStatusFromTime(order.createdAt);
+    const computed = orders.map((order) => ({
+      ...order,
+      status: getStatusFromTime(order.createdAt),
+    }));
 
-      if (order.status !== nextStatus) {
-        const updated = await prisma.order.update({
-          where: { id: order.id },
-          data: { status: nextStatus },
-        });
-
-        return updated;
-      }
-
-      return order;
-    }),
-  );
-
-  return Response.json(updatedOrders);
+    return success(computed);
+  } catch {
+    return failure("Failed to fetch orders", 500);
+  }
 }
